@@ -1,0 +1,6 @@
+{
+  "param1": "mysql-service",
+  "param2": "root",
+  "param3": "your_password",
+  "param4": "your_db_name"
+}

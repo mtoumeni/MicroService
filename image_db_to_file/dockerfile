@@ -1,0 +1,15 @@
+from python:3.13-alpine3.23
+
+# Set working directory
+workdir /usr/src/app
+
+# Copy script and requirements
+copy db_to_file.py .
+copy requirements.txt .
+copy params.json .
+
+# Install dependencies
+run pip install --no-cache-dir -r requirements.txt
+
+# Run the pod script
+cmd ["python3", "db_to_file.py"]

@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-generator
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-generator
+            image: docker.io/library/generatevalue:latest
+            imagePullPolicy: Never
+            volumeMounts:
+            - name: generator-logs-storage
+              mountPath: /usr/tmp
+          restartPolicy: OnFailure
+          volumes:
+          - name: generator-logs-storage
+            hostPath:
+              path: /mysqlpython/GenerateValue
+              type: DirectoryOrCreate

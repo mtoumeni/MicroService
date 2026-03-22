@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mydatabase-mysql-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        app: mydbserver
+        tier: mysql
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: mydatabase-mysql
+        image: docker.io/library/mydb:latest
+        imagePullPolicy: Never
+        env:
+        - name: DB_HOST
+          value: mysql-service
+        - name: DB_USER
+          value: root
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        
+        
+        

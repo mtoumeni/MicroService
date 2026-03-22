@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-dbtofile
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-dbtofile
+            image: docker.io/library/dbtofile:latest
+            imagePullPolicy: Never
+            volumeMounts:
+            - name: dbtofile-logs-storage
+              mountPath: /usr/tmp
+          restartPolicy: OnFailure
+          volumes:
+          - name: dbtofile-logs-storage
+            hostPath:
+              path: /mysqlpython/db_to_file
+              type: DirectoryOrCreate
